@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Friend Finder</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.10/css/mdb.min.css" rel="stylesheet">
+    <!-- JQuery -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.10/js/mdb.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
+</head>
+<body class="bg">
+    <!-- Top bar and header-->
+    <div class="fluid-container">
+        <div class="row navbar navbar-light">
+            <div class="col-md-4">
+                <a class="navbar-brand" href="#">
+                    <img src="https://mdbootstrap.com/img/logo/mdb-transparent.png" height="30" class="d-inline-block align-top"
+                        alt="mdb logo">Friend finder
+                </a>
+            </div>
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-4">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+        </div>
+        <div class="col-md-6">
+            <br>
+            <br>
+            <div class="container shadow-sm p-3 mb-5 bg-white rounded">
+                <form action="/api/survey" method="POST">
+                    <label for="q1">Your mind is always buzzing with unexplored ideas and plans.</label>
+                    <div>
+                        <select clas = "selector" id="q1">
+                            <option>choose </option>
+                            <option value=1>"1 strongly disagree"</option>
+                            <option value=2>Saab</option>
+                            <option value=3>Fiat</option>
+                            <option value=4>4 "agree"</option>
+                            <option value=5>4 "strongly agree"</option>
+                        </select>
+                    </div>
+                    <label for="q2">second question.</label>
+                    <div>
+                        <select clas = "selector" id="q2">
+                            <option>choose </option>
+                            <option value=1>"1 strongly disagree"</option>
+                            <option value=2>Saab</option>
+                            <option value=3>Fiat</option>
+                            <option value=4>4 "agree"</option>
+                            <option value=5>4 "strongly agree"</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" type="submit" id="submit-btn">Submit form</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script language="javascript" type="text/javascript">
+        $(document).ready(function () {
+            console.log("go")
+        });
+        
+        var qa={};
+
+        var newUser = {
+                name: "shivali",
+                email: "something@gmail.com", 
+            }
+
+        $("select").change(function () {
+                    var getId = $(this).attr('id');
+                    //console.log(getId)
+                    var q1 = $("#"+getId+" option:selected").val();
+                    console.log(q1)
+                    qa[getId] = q1
+                    //console.log(qa)  
+                })
+               .trigger("change"); 
+          
+           $("#submit-btn").click(function(event){
+            event.preventDefault();
+            console.log("qa after select :",qa)
+            newUser["score"]=Object.values(qa)
+            console.log(newUser)
+            $.post("/api/survey",newUser,function(req,response){
+                console.log("my response",response)
+            })
+        });
+          
+       
+    </script>
+</body>
+</html>
